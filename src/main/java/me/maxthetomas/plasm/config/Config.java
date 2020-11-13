@@ -23,7 +23,7 @@ public class Config {
 
     // Discord:
     public static final String sendTypeString = fileConfiguration.getString(Paths.SEND_TYPE);
-    public static SendType sendType;
+    public static SendType sendType = SendType.valueOf(sendTypeString);
     public static final String activityType = fileConfiguration.getString(Paths.ACTIVITY_TYPE);
     public static final String activity = fileConfiguration.getString(Paths.ACTIVITY);
     public static final String token = fileConfiguration.getString(Paths.TOKEN);
@@ -44,13 +44,13 @@ public class Config {
     public static final String messageFormatWebhook = fileConfiguration.getString(Paths.MESSAGE_FORMAT_WEBHOOK);
     public static final String messageFormatMinecraft = fileConfiguration.getString(Paths.MESSAGE_FORMAT_MINECRAFT);
 
-    Config() {
-        sendType = SendType.valueOf(sendTypeString);
+    public Config() {
         new BukkitRunnable()
         {
             @Override
             public void run() {
             try {
+
                 Plasm.jda.awaitReady();
                 guild = Plasm.jda.getGuildById(guildId);
                 if (guild != null)
@@ -65,7 +65,7 @@ public class Config {
             e.printStackTrace();
         }
         }
-        }.runTaskLater(ThisPlugin.get(), 200);
+        }.runTaskLater(ThisPlugin.get(), 40);
     }
 
     public static String applyPlaceholdersMC(@NotNull String input, @Nullable String message, @Nullable Player player) throws NullPlaceholderException {

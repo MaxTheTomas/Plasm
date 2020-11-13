@@ -3,4 +3,4 @@ version: @version@
 main: me.maxthetomas.plasm.Plasm
 api-version: 1.16
 load: STARTUP
-authors: [_MaxThwTomas_]
+authors: [_MaxTheTomas_]

@@ -8,7 +8,7 @@ public class Paths {
 
     public static String SEND_TYPE = "discord.send-type";
     public static String GUILD = "discord.server";
-    public static String CHANNEL = "discord.send-type";
+    public static String CHANNEL = "discord.channel";
 
     public static String WEBHOOK_URL = "webhook.url";
     public static String WEBHOOK_NICKNAME = "webhook.nickname";
