@@ -1,18 +1,25 @@
 package me.maxthetomas.plasm.executers;
 
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
+import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import me.maxthetomas.plasm.Plasm;
-import net.dv8tion.jda.api.JDA;
+import me.maxthetomas.plasm.config.Config;
 
 public class DiscordExecutor {
     private final net.dv8tion.jda.api.JDA Jda = Plasm.jda;
 
-    public static void sendMessageAsBot(String message) // Todo:
+    public static void sendMessageAsBot(String message)
     {
-
+        Config.channel.sendMessage(message).queue();
     }
 
     public static void sendMessageAsWebhook(String message, String avatarUrl, String nickname)
     {
-
+        WebhookMessageBuilder messageBuilder = new WebhookMessageBuilder();
+        messageBuilder.setContent(message);
+        messageBuilder.setUsername(nickname);
+        messageBuilder.setAvatarUrl(avatarUrl);
+        Config.webhookClient.send(messageBuilder.build());
     }
 }

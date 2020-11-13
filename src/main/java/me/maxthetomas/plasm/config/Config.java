@@ -1,5 +1,7 @@
 package me.maxthetomas.plasm.config;
 
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
 import me.maxthetomas.plasm.Plasm;
 import me.maxthetomas.plasm.ThisPlugin;
 import me.maxthetomas.plasm.exceptions.NullPlaceholderException;
@@ -26,6 +28,7 @@ public class Config {
     public static final String channelId = fileConfiguration.getString(Paths.CHANNEL);
     public static Guild guild = null;
     public static MessageChannel channel = null;
+    public static WebhookClient webhookClient = null;
 
 
     // Webhook:
@@ -47,8 +50,10 @@ public class Config {
             channel = guild.getTextChannelById(channelId);
             if (guild == null || channel == null)
             {
+                ThisPlugin.get().getLogger().warning("Add bot to your server: 'https://discord.com/api/oauth2/authorize?client_id=" + Plasm.jda.getSelfUser().getId() + "&permissions=0&scope=bot'");
                 throw new NullPointerException();
             }
+            webhookClient = new WebhookClientBuilder(Config.webhookUrl).build();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

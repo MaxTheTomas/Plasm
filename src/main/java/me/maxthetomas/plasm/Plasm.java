@@ -20,6 +20,9 @@ public final class Plasm extends JavaPlugin {
 
     private boolean initBot()
     {
+        if (Config.token == null)
+            ThisPlugin.get().getLogger().warning("Create bot and get his token from this page: 'https://discord.com/developers/applications'");
+
         JDABuilder jdaBuilder = JDABuilder.createDefault(Config.token);
         try {
             jda = jdaBuilder.build();
