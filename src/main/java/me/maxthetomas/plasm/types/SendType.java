@@ -1,6 +1,6 @@
 package me.maxthetomas.plasm.types;
 
-public enum SendTypes {
+public enum SendType {
     WEBHOOK,
     BOT
 }

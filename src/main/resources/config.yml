@@ -1,8 +1,45 @@
-bot-properties:
-  token: "" #Insert here your discord token
-  activity: "" #This text will show after 'Playing' status. Leave empty to disable.
+# _____   _
+# |  __ \ | |
+# | |__)  | |  __ _ ___ _ __ ___
+# |  ___/ | | / _` / __| '_ ` _ \
+# | |     | |  (_| \__ \ | | | | |
+# |_|     |_| \__,_|___/_| |_| |_|
 
-message-properties:
-  send-type: "BOT" # WEBHOOK or BOT
-  bot-msg-format: "<$playername>: $message"
-config-version: 0 #Do not change this value.
+# Версия: Альфа 0.1
+# В любом месте конфига можно использовать следущие заполнители:
+# Для Minecraft:
+# - %player.name% | %player.head2d% | %player.head3d%
+# Для Discord:
+# - %member.nickname% | %member.id%
+# Для всего:
+# - %message%
+
+# Настройки бота
+bot:
+#   Токен
+  token: ""
+#   Статус:
+#   DEFAULT, LISTENING, STREAMING, WATCHING
+  activity-type: "DEFAULT"
+  activity: ""
+
+webhook:
+  url: "" # URL вебхука
+  nickname: "%player.name%"
+  avatar-url: "%player.head2d%" # Используйте любую картинку или %player.head2d% / %player.head3d%
+
+discord:
+  server: "" # ID сервера Discord
+  channel: "" # ID канала Discord
+  send-type: "BOT" # WEBHOOK или BOT
+
+#  Как будут выглядеть сообщения
+message-format:
+#  В Discord
+  bot: "%player.name%: %message%"
+  webhook: "%message%"
+#  В Minecraft
+  minecraft: "&7<%member.nickname%> %message%"
+
+# Не меняйте данное значение!
+config-version: 0  #Do not change this value.
