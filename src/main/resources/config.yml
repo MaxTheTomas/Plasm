@@ -5,41 +5,39 @@
 # | |     | |  (_| \__ \ | | | | |
 # |_|     |_| \__,_|___/_| |_| |_|
 
-# Версия: Альфа 0.1
-# В любом месте конфига можно использовать следущие заполнители:
-# Для Minecraft:
+# Version: @version@
+# You can use that placehoders:
+# Minecraft:
 # - %player.name% | %player.head2d% | %player.head3d%
-# Для Discord:
+# Discord:
 # - %member.nickname% | %member.id%
-# Для всего:
+# Anything:
 # - %message%
 
-# Настройки бота
+# Bot settings
 bot:
-#   Токен
   token: ""
-#   Статус:
+#   Allowed:
 #   DEFAULT, LISTENING, STREAMING, WATCHING
   activity-type: "DEFAULT"
   activity: ""
 
 webhook:
-  url: "" # URL вебхука
+  url: "" # Webhook URL
   nickname: "%player.name%"
-  avatar-url: "%player.head2d%" # Используйте любую картинку или %player.head2d% / %player.head3d%
+  avatar-url: "%player.head2d%" # Use %player.head2d% / %player.head3d% or any image
 
 discord:
-  server: "" # ID сервера Discord
-  channel: "" # ID канала Discord
-  send-type: "BOT" # WEBHOOK или BOT
+  server: "" # Discord server ID
+  channel: "" # Discord channel ID
+  send-type: "BOT" # WEBHOOK or BOT
 
-#  Как будут выглядеть сообщения
+# Message Formatting
 message-format:
-#  В Discord
+#  To Discord
   bot: "%player.name%: %message%"
   webhook: "%message%"
-#  В Minecraft
+#  To Minecraft
   minecraft: "&7<%member.nickname%> %message%"
 
-# Не меняйте данное значение!
-config-version: 0  #Do not change this value.
+config-version: 1  #Do not change this value.

@@ -15,8 +15,18 @@ import javax.security.auth.login.LoginException;
 
 public final class Plasm extends JavaPlugin {
 
-    private static final int currentConfigVersion = 0;
+    private static final int currentConfigVersion = 1;
     public static JDA jda;
+
+    @Override
+    public void onEnable() {
+        ThisPlugin.constructor(this);
+        configSetup();
+        if (!initBot()) {
+            getLogger().warning("Bot isn't authorized! Check your token property. Shutting down...");
+            Bukkit.shutdown();
+        }
+    }
 
     private boolean initBot()
     {
@@ -35,17 +45,12 @@ public final class Plasm extends JavaPlugin {
         return true;
     }
 
-    private void configSetup() { if (getConfig().getInt(Paths.CONFIG_VERSION) != currentConfigVersion) { saveDefaultConfig(); } }
-
-    @Override
-    public void onEnable() {
-        ThisPlugin.constructor(this);
-        configSetup();
-        if (!initBot()) {
-            getLogger().warning("Bot isn't authorized! Check your token property. Shutting down...");
-            Bukkit.shutdown();
-        }
+    private void configSetup() {
+        saveDefaultConfig();
+        if (Config.configVersion != currentConfigVersion) { getLogger().warning("Update config.yml!"); }
     }
+
+
 
     @Override
     public void onDisable() {
