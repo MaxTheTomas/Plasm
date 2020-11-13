@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -105,7 +106,7 @@ public class Config {
         {
             if (message != null)
             {
-                output = output.replaceAll(Placeholders.MESSAGE, message);
+                output = output.replaceAll(Placeholders.MESSAGE, message.replaceAll("&", ""));
             }
             else
             {
@@ -118,13 +119,15 @@ public class Config {
             if (member != null)
             {
                 output = output.replaceAll(Placeholders.MEMBER_ID, member.getId());
-                output = output.replaceAll(Placeholders.MEMBER_NICKNAME, member.getNickname());
+                output = output.replaceAll(Placeholders.MEMBER_NICKNAME, member.getUser().getName());
             }
             else
             {
                 throw new NullPlaceholderException("Member is null, but placeholder found");
             }
         }
+        if (output.contains("&"))
+            output = output.replaceAll("&", String.valueOf(ChatColor.COLOR_CHAR));
 
         return output;
     }

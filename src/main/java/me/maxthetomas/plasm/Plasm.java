@@ -2,6 +2,7 @@ package me.maxthetomas.plasm;
 
 import me.maxthetomas.plasm.config.Config;
 import me.maxthetomas.plasm.config.Paths;
+import me.maxthetomas.plasm.events.DiscordListener;
 import me.maxthetomas.plasm.events.MinecraftListener;
 import me.maxthetomas.plasm.types.SendType;
 import net.dv8tion.jda.api.JDA;
@@ -25,11 +26,12 @@ public final class Plasm extends JavaPlugin {
     public void onEnable() {
         ThisPlugin.constructor(this);
         configSetup();
-        setupEvents();
         if (!initBot()) {
             getLogger().warning("Bot isn't authorized! Check your token property. Shutting down...");
             Bukkit.shutdown();
         }
+
+        setupEvents();
     }
 
     private boolean initBot()
@@ -58,6 +60,7 @@ public final class Plasm extends JavaPlugin {
     private void setupEvents()
     {
         Bukkit.getPluginManager().registerEvents(new MinecraftListener(), this);
+        jda.addEventListener(new DiscordListener());
     }
 
 
