@@ -1,0 +1,38 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id 'application'
+    id'com.github.johnrengelman.shadow' version '4.0.4'
+}
+group = 'me.maxthetomas.plasm'
+version = '0.1'
+mainClassName = 'me.maxthetomas.plasm.Plasm'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:4.2.0_207'
+    implementation 'club.minnced:discord-webhooks:0.3.2'
+    compile 'com.destroystokyo.paper:paper-api:1.16.3-R0.1-SNAPSHOT'
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}

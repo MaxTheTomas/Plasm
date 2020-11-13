@@ -1,0 +1,8 @@
+bot-properties:
+  token: "" #Insert here your discord token
+  activity: "" #This text will show after 'Playing' status. Leave empty to disable.
+
+message-properties:
+  send-type: "BOT" # WEBHOOK or BOT
+  bot-msg-format: "<$playername>: $message"
+config-version: 0 #Do not change this value.

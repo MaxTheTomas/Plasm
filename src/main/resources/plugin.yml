@@ -1,0 +1,6 @@
+name: Plasm
+version: @version@
+main: me.maxthetomas.plasm.plasm.Plasm
+api-version: 1.16
+load: STARTUP
+authors: [_MaxThwTomas_]
