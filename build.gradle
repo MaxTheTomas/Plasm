@@ -5,8 +5,9 @@ plugins {
     id 'application'
     id'com.github.johnrengelman.shadow' version '4.0.4'
 }
+
 group = 'me.maxthetomas.plasm'
-version = 'Alpha-0.1-PreRelease'
+version = 'Alpha-0.2.1'
 mainClassName = 'me.maxthetomas.plasm.Plasm'
 
 sourceCompatibility = '1.8'
@@ -41,9 +42,4 @@ test {
     systemProperty "file.encoding", "utf-8"
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-applicationDefaultJvmArgs = "-Dfile.encoding=UTF-8" as Iterable<String>
 compileJava.options.encoding = 'UTF-8'

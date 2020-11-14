@@ -18,7 +18,7 @@ import javax.security.auth.login.LoginException;
 
 public final class Plasm extends JavaPlugin {
 
-    private static final int currentConfigVersion = 1;
+    private static final int currentConfigVersion = 2;
     public static JDA jda;
     Config c = null;
 

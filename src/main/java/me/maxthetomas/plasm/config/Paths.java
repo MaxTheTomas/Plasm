@@ -17,6 +17,9 @@ public class Paths {
     public static String MESSAGE_FORMAT_BOT = "message-format.bot";
     public static String MESSAGE_FORMAT_WEBHOOK = "message-format.webhook";
     public static String MESSAGE_FORMAT_MINECRAFT = "message-format.minecraft";
-    
+
+    public static String MESSAGE_FORMAT_JOIN = "message-format.join";
+    public static String MESSAGE_FORMAT_LEAVE = "message-format.leave";
+
     public static String CONFIG_VERSION = "config-version";
 }

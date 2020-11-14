@@ -11,8 +11,8 @@
 # - %player.name% | %player.head2d% | %player.head3d%
 # Discord:
 # - %member.nickname% | %member.id%
-# Anything:
-# - %message%
+# Anywhere:
+# - %message% | %server.motd% | %server.ip%
 
 # Bot settings
 bot:
@@ -37,7 +37,10 @@ message-format:
 #  To Discord
   bot: "%player.name%: %message%"
   webhook: "%message%"
+  join: "%player.name% jonied the game"
+  leave: "%player.name% left the game"
+
 #  To Minecraft
   minecraft: "&7<%member.nickname%> %message%"
 
-config-version: 1  #Do not change this value.
+config-version: @buildId@  #Do not change this value.

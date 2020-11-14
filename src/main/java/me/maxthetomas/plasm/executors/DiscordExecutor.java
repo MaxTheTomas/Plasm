@@ -1,7 +1,5 @@
-package me.maxthetomas.plasm.executers;
+package me.maxthetomas.plasm.executors;
 
-import club.minnced.discord.webhook.WebhookClient;
-import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import me.maxthetomas.plasm.Plasm;
 import me.maxthetomas.plasm.config.Config;

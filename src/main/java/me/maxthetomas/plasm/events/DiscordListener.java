@@ -1,7 +1,9 @@
 package me.maxthetomas.plasm.events;
 
 import me.maxthetomas.plasm.config.Config;
+import me.maxthetomas.plasm.config.PlaceholderApplier;
 import me.maxthetomas.plasm.exceptions.NullPlaceholderException;
+import me.maxthetomas.plasm.executors.MinecraftExecutor;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
@@ -16,11 +18,7 @@ public class DiscordListener extends ListenerAdapter {
 
         if (e.getChannel() == Config.channel)
         {
-            try {
-                Bukkit.broadcastMessage(Config.applyPlaceholdersDiscord(Config.messageFormatMinecraft, e.getMessage().getContentRaw(), e.getMember()));
-            } catch (NullPlaceholderException nullPlaceholderException) {
-                nullPlaceholderException.printStackTrace();
-            }
+            MinecraftExecutor.broadcast(e.getMessage().getContentRaw(), e.getMember());
         }
     }
 }
