@@ -67,15 +67,19 @@ public class Config {
             if (guild != null)
                 channel = guild.getTextChannelById(channelId);
 
-            if (consoleGuildString.equals("SAME"))
-                consoleGuild = guild;
-            else
-                consoleGuild = Plasm.jda.getGuildById(consoleGuildString);
+            if (consoleEnabled)
+            {
+                if (consoleGuildString.equals("SAME"))
+                    consoleGuild = guild;
+                else
+                    consoleGuild = Plasm.jda.getGuildById(consoleGuildString);
 
-            assert consoleGuild != null;
-            consoleChannel = consoleGuild.getTextChannelById(consoleChannelString);
+                assert consoleGuild != null;
+                consoleChannel = consoleGuild.getTextChannelById(consoleChannelString);
 
-            if (guild == null || channel == null || consoleGuild == null || consoleChannel == null)
+            }
+
+            if (guild == null || channel == null)// || consoleGuild == null || consoleChannel == null)
             {
                 ThisPlugin.get().getLogger().warning("Add bot to your server: 'https://discord.com/api/oauth2/authorize?client_id=" + Plasm.jda.getSelfUser().getId() + "&permissions=0&scope=bot'");
                 throw new NullPointerException();
