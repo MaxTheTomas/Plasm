@@ -1,5 +1,6 @@
 package me.maxthetomas.plasm.config;
 
+import me.maxthetomas.plasm.Plasm;
 import me.maxthetomas.plasm.exceptions.NullPlaceholderException;
 import net.dv8tion.jda.api.entities.Member;
 import org.bukkit.Bukkit;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class PlaceholderApplier {
     public static String applyPlaceholdersMC(@NotNull String input, @Nullable String message, @Nullable Player player) throws NullPlaceholderException {
@@ -73,6 +75,7 @@ public class PlaceholderApplier {
             if (member != null)
             {
                 output = output.replaceAll(Placeholders.MEMBER_ID, member.getId());
+                //output = output.replaceAll(Placeholders.MEMBER_NICKNAME, Objects.requireNonNull(Objects.requireNonNull(Config.guild.getMemberById(member.getId())).getNickname()));
                 output = output.replaceAll(Placeholders.MEMBER_NICKNAME, member.getUser().getName());
             }
             else

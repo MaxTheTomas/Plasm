@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'me.maxthetomas.plasm'
-version = 'Alpha-0.2'
+version = 'Alpha0.2'
 mainClassName = 'me.maxthetomas.plasm.Plasm'
 
 sourceCompatibility = '1.8'

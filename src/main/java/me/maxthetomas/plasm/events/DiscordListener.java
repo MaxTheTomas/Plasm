@@ -21,7 +21,7 @@ public class DiscordListener extends ListenerAdapter {
             MinecraftExecutor.broadcast(e.getMessage().getContentRaw(), e.getMember());
         }
 
-        if (e.getChannel() == Config.consoleChannel)
+        if (e.getChannel() == Config.consoleChannel && Config.consoleEnabled)
         {
             MinecraftExecutor.sendCommandToConsole(e.getMessage().getContentDisplay());
         }
