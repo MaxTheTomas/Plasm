@@ -2,6 +2,7 @@ package me.maxthetomas.plasm;
 
 import me.maxthetomas.plasm.config.Config;
 import me.maxthetomas.plasm.config.Paths;
+import me.maxthetomas.plasm.console.LoggerRegisterer;
 import me.maxthetomas.plasm.events.DiscordListener;
 import me.maxthetomas.plasm.events.MinecraftListener;
 import me.maxthetomas.plasm.exceptions.UnupdatedConfigException;
@@ -68,6 +69,9 @@ public final class Plasm extends JavaPlugin {
 
     private void setupEvents()
     {
+        if (Config.consoleEnabled)
+            new LoggerRegisterer();
+
         Bukkit.getPluginManager().registerEvents(new MinecraftListener(), this);
         jda.addEventListener(new DiscordListener());
     }

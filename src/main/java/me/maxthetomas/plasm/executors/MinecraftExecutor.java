@@ -18,4 +18,9 @@ public class MinecraftExecutor {
         }
         return true;
     }
+
+    public static void sendCommandToConsole(@NotNull String command)
+    {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
 }

@@ -14,7 +14,7 @@ import java.util.logging.LogRecord;
 public class LoggerRegisterer {
     LoggerType loggerType = Config.consoleLoggerType;
 
-    LoggerRegisterer() {
+    public LoggerRegisterer() {
         if (loggerType.equals(LoggerType.BUKKIT))
         {
             Logger.loggerBukkit.addHandler(handler());
