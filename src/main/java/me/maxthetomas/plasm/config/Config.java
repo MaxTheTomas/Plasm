@@ -5,6 +5,7 @@ import club.minnced.discord.webhook.WebhookClientBuilder;
 import me.maxthetomas.plasm.Plasm;
 import me.maxthetomas.plasm.ThisPlugin;
 import me.maxthetomas.plasm.exceptions.NullPlaceholderException;
+import me.maxthetomas.plasm.types.LoggerType;
 import me.maxthetomas.plasm.types.SendType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -17,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Spliterator;
 
 public class Config {
     public static final FileConfiguration fileConfiguration = ThisPlugin.get().getConfig();
@@ -47,27 +49,43 @@ public class Config {
     public static final String messageFormatLeave = fileConfiguration.getString(Paths.MESSAGE_FORMAT_LEAVE);
     public static final String messageFormatMinecraft = fileConfiguration.getString(Paths.MESSAGE_FORMAT_MINECRAFT);
 
+    // Console:
+    public static final boolean consoleEnabled = fileConfiguration.getBoolean(Paths.CON_ENABLED);
+    public static final String consoleGuildString = fileConfiguration.getString(Paths.CON_GUILD);
+    public static Guild consoleGuild = null;
+    public static final String consoleChannelString = fileConfiguration.getString(Paths.CON_CHANNEL);
+    public static MessageChannel consoleChannel = null;
+    public static final String consoleLoggerTypeString = fileConfiguration.getString(Paths.CON_LOGGER_TYPE);
+    public static final LoggerType consoleLoggerType = LoggerType.valueOf(consoleLoggerTypeString);
+
+
+
     public Config() {
         new BukkitRunnable()
         {
             @Override
             public void run() {
             try {
-
                 Plasm.jda.awaitReady();
+
                 guild = Plasm.jda.getGuildById(guildId);
                 if (guild != null)
                     channel = guild.getTextChannelById(channelId);
-                if (guild == null || channel == null)
+
+                if (consoleGuildString.equals("SAME"))
+                    consoleGuild = guild;
+                else
+                    consoleGuild = Plasm.jda.getGuildById(consoleGuildString);
+
+                assert consoleGuild != null;
+                consoleChannel = consoleGuild.getTextChannelById(consoleChannelString);
+                if (guild == null || channel == null || consoleGuild == null || consoleChannel == null)
                 {
                     ThisPlugin.get().getLogger().warning("Add bot to your server: 'https://discord.com/api/oauth2/authorize?client_id=" + Plasm.jda.getSelfUser().getId() + "&permissions=0&scope=bot'");
                     throw new NullPointerException();
                 }
+
                 webhookClient = new WebhookClientBuilder(Config.webhookUrl).build();
-            } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        }
-        }.runTaskLater(ThisPlugin.get(), 40);
+            } catch (InterruptedException e) { e.printStackTrace(); } } }.runTaskLater(ThisPlugin.get(), 40);
     }
 }

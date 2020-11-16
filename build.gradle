@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'me.maxthetomas.plasm'
-version = 'Alpha-0.2.1'
+version = 'PreAlpha-0.2'
 mainClassName = 'me.maxthetomas.plasm.Plasm'
 
 sourceCompatibility = '1.8'
@@ -16,6 +16,7 @@ targetCompatibility = '1.8'
 repositories {
     mavenCentral()
     jcenter()
+    google()
     maven {
         name = 'papermc-repo'
         url = 'https://papermc.io/repo/repository/maven-public/'
@@ -30,6 +31,9 @@ dependencies {
     implementation 'net.dv8tion:JDA:4.2.0_207'
     implementation 'club.minnced:discord-webhooks:0.3.2'
     compile 'com.destroystokyo.paper:paper-api:1.16.3-R0.1-SNAPSHOT'
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
 }
 
 processResources {

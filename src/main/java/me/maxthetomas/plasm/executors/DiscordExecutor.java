@@ -12,12 +12,16 @@ public class DiscordExecutor {
         Config.channel.sendMessage(message).queue();
     }
 
-    public static void sendMessageAsWebhook(String message, String avatarUrl, String nickname)
-    {
+    public static void sendMessageAsWebhook(String message, String avatarUrl, String nickname) {
         WebhookMessageBuilder messageBuilder = new WebhookMessageBuilder();
         messageBuilder.setContent(message);
         messageBuilder.setUsername(nickname);
         messageBuilder.setAvatarUrl(avatarUrl);
         Config.webhookClient.send(messageBuilder.build());
+    }
+
+    public static void sendMessageToConsole(String message)
+    {
+        Config.consoleChannel.sendMessage(message).queue();
     }
 }

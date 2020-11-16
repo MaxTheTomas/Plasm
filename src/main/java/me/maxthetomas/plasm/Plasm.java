@@ -4,12 +4,15 @@ import me.maxthetomas.plasm.config.Config;
 import me.maxthetomas.plasm.config.Paths;
 import me.maxthetomas.plasm.events.DiscordListener;
 import me.maxthetomas.plasm.events.MinecraftListener;
+import me.maxthetomas.plasm.exceptions.UnupdatedConfigException;
 import me.maxthetomas.plasm.types.SendType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.managers.AudioManager;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,14 +21,18 @@ import javax.security.auth.login.LoginException;
 
 public final class Plasm extends JavaPlugin {
 
-    private static final int currentConfigVersion = 2;
+    private static final int confVer = 4;
     public static JDA jda;
     Config c = null;
 
     @Override
     public void onEnable() {
         ThisPlugin.constructor(this);
-        configSetup();
+        try {
+            configSetup();
+        } catch (UnupdatedConfigException e) {
+            e.printStackTrace();
+        }
         if (!initBot()) {
             getLogger().warning("Bot isn't authorized! Check your token property. Shutting down...");
             Bukkit.shutdown();
@@ -51,10 +58,12 @@ public final class Plasm extends JavaPlugin {
         return true;
     }
 
-    private void configSetup() {
+    private void configSetup() throws UnupdatedConfigException {
         saveDefaultConfig();
         c = new Config();
-        if (Config.configVersion != currentConfigVersion) { getLogger().warning("Update config.yml!"); }
+        if (Config.configVersion != confVer) {
+            throw new UnupdatedConfigException("" + Config.configVersion + " lower than current allowed config version.");
+        }
     }
 
     private void setupEvents()
@@ -65,7 +74,9 @@ public final class Plasm extends JavaPlugin {
 
 
     @Override
-    public void onDisable() {
+    public void onDisable()
+    {
+        jda.getAudioManagers().forEach(AudioManager::closeAudioConnection);
         if (jda != null) jda.shutdown();
     }
 }

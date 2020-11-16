@@ -43,4 +43,10 @@ message-format:
 #  To Minecraft
   minecraft: "&7<%member.nickname%> %message%"
 
-config-version: @buildId@  #Do not change this value.
+console: # EXPERIMENTAL
+  enabled: false
+  guild: "" # "SAME" or ID
+  channel: ""
+  logger: "" # "BUKKIT" or "LOG4J"
+
+config-version: 4 #Do not change this value.
