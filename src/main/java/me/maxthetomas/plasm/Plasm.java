@@ -29,15 +29,18 @@ public final class Plasm extends JavaPlugin {
     @Override
     public void onEnable() {
         ThisPlugin.constructor(this);
+
         try {
             configSetup();
         } catch (UnupdatedConfigException e) {
             e.printStackTrace();
         }
+
         if (!initBot()) {
             getLogger().warning("Bot isn't authorized! Check your token property. Shutting down...");
             Bukkit.shutdown();
         }
+        Config.setupDiscord();
 
         setupEvents();
     }
@@ -61,7 +64,6 @@ public final class Plasm extends JavaPlugin {
 
     private void configSetup() throws UnupdatedConfigException {
         saveDefaultConfig();
-        c = new Config();
         if (Config.configVersion != confVer) {
             throw new UnupdatedConfigException("" + Config.configVersion + " lower than current allowed config version.");
         }
@@ -70,7 +72,7 @@ public final class Plasm extends JavaPlugin {
     private void setupEvents()
     {
         if (Config.consoleEnabled)
-            new LoggerRegisterer();
+            LoggerRegisterer.register();
 
         Bukkit.getPluginManager().registerEvents(new MinecraftListener(), this);
         jda.addEventListener(new DiscordListener());

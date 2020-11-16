@@ -1,5 +1,6 @@
 package me.maxthetomas.plasm.console;
 
+import me.maxthetomas.plasm.ThisPlugin;
 import me.maxthetomas.plasm.config.Config;
 import me.maxthetomas.plasm.types.LoggerType;
 import org.apache.logging.log4j.Level;
@@ -7,27 +8,38 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.message.Message;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 public class LoggerRegisterer {
-    LoggerType loggerType = Config.consoleLoggerType;
+    static LoggerType loggerType = Config.consoleLoggerType;
 
-    public LoggerRegisterer() {
-        if (loggerType.equals(LoggerType.BUKKIT))
-        {
-            Logger.loggerBukkit.addHandler(handler());
-            Logger.logger4j = null;
-        }
-        else if (loggerType.equals(LoggerType.LOG4J))
-        {
-            Logger.logger4j.addFilter(filter());
-            Logger.loggerBukkit = null;
-        }
+    public static void register()
+    {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (loggerType.equals(LoggerType.BUKKIT))
+                {
+                    Logger.loggerBukkit.addHandler(handler());
+                    Logger.logger4j = null;
+                    Bukkit.getLogger().info("Successfully registered Bukkit logger!");
+                }
+                else if (loggerType.equals(LoggerType.LOG4J))
+                {
+                    Logger.logger4j.addFilter(filter());
+                    Logger.loggerBukkit = null;
+                    Bukkit.getLogger().info("Successfully registered LOG4J logger!");
+                }
+            }
+        }.runTaskLater(ThisPlugin.get(), 200);
     }
 
-    Handler handler() {
+
+    static Handler handler() {
         return new Handler() {
             @Override
             public void publish(LogRecord record) {
@@ -45,7 +57,7 @@ public class LoggerRegisterer {
             }
         };
     }
-    Filter filter() {
+    static Filter filter() {
         return new Filter() {
             @Override
             public Result getOnMismatch() {

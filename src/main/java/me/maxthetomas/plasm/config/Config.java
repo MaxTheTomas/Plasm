@@ -58,34 +58,30 @@ public class Config {
     public static final String consoleLoggerTypeString = fileConfiguration.getString(Paths.CON_LOGGER_TYPE);
     public static final LoggerType consoleLoggerType = LoggerType.valueOf(consoleLoggerTypeString);
 
+    public static void setupDiscord()
+    {
+        try {
+            Plasm.jda.awaitReady();
 
+            guild = Plasm.jda.getGuildById(guildId);
+            if (guild != null)
+                channel = guild.getTextChannelById(channelId);
 
-    public Config() {
-        new BukkitRunnable()
-        {
-            @Override
-            public void run() {
-            try {
-                Plasm.jda.awaitReady();
+            if (consoleGuildString.equals("SAME"))
+                consoleGuild = guild;
+            else
+                consoleGuild = Plasm.jda.getGuildById(consoleGuildString);
 
-                guild = Plasm.jda.getGuildById(guildId);
-                if (guild != null)
-                    channel = guild.getTextChannelById(channelId);
+            assert consoleGuild != null;
+            consoleChannel = consoleGuild.getTextChannelById(consoleChannelString);
 
-                if (consoleGuildString.equals("SAME"))
-                    consoleGuild = guild;
-                else
-                    consoleGuild = Plasm.jda.getGuildById(consoleGuildString);
+            if (guild == null || channel == null || consoleGuild == null || consoleChannel == null)
+            {
+                ThisPlugin.get().getLogger().warning("Add bot to your server: 'https://discord.com/api/oauth2/authorize?client_id=" + Plasm.jda.getSelfUser().getId() + "&permissions=0&scope=bot'");
+                throw new NullPointerException();
+            }
 
-                assert consoleGuild != null;
-                consoleChannel = consoleGuild.getTextChannelById(consoleChannelString);
-                if (guild == null || channel == null || consoleGuild == null || consoleChannel == null)
-                {
-                    ThisPlugin.get().getLogger().warning("Add bot to your server: 'https://discord.com/api/oauth2/authorize?client_id=" + Plasm.jda.getSelfUser().getId() + "&permissions=0&scope=bot'");
-                    throw new NullPointerException();
-                }
-
-                webhookClient = new WebhookClientBuilder(Config.webhookUrl).build();
-            } catch (InterruptedException e) { e.printStackTrace(); } } }.runTaskLater(ThisPlugin.get(), 40);
+            webhookClient = new WebhookClientBuilder(Config.webhookUrl).build();
+        } catch (InterruptedException e) { e.printStackTrace(); }
     }
 }

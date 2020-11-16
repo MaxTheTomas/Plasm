@@ -12,7 +12,7 @@
 # Discord:
 # - %member.nickname% | %member.id%
 # Anywhere:
-# - %message% | %server.motd% | %server.ip%
+# - %message% | %server.motd%
 
 # Bot settings
 bot:
@@ -45,8 +45,8 @@ message-format:
 
 console: # EXPERIMENTAL
   enabled: false
-  guild: "" # "SAME" or ID
+  guild: "SAME" # "SAME" or ID
   channel: ""
-  logger: "" # "BUKKIT" or "LOG4J"
+  logger: "BUKKIT" # "BUKKIT" or "LOG4J"
 
 config-version: 4 #Do not change this value.
