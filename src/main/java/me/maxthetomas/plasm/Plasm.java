@@ -11,13 +11,20 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.ShutdownEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 public final class Plasm extends JavaPlugin {
@@ -82,7 +89,23 @@ public final class Plasm extends JavaPlugin {
     @Override
     public void onDisable()
     {
-        jda.getAudioManagers().forEach(AudioManager::closeAudioConnection);
-        if (jda != null) jda.shutdown();
+        if (jda != null) jda.getEventManager().getRegisteredListeners().forEach(listener -> jda.getEventManager().unregister(listener));
+        if (jda != null) jda.getAudioManagers().forEach(AudioManager::closeAudioConnection);
+        if (jda != null) {
+            CompletableFuture<Void> shutdownTask = new CompletableFuture<>();
+            jda.addEventListener(new ListenerAdapter() {
+                @Override
+                public void onShutdown(@NotNull ShutdownEvent event) {
+                    shutdownTask.complete(null);
+                }
+            });
+            jda.shutdownNow();
+            jda = null;
+            try {
+                shutdownTask.get(5, TimeUnit.SECONDS);
+            } catch (TimeoutException | InterruptedException | ExecutionException e) {
+                getLogger().warning("JDA took too long to shut down, skipping");
+            }
+        }
     }
 }
